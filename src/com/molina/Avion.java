@@ -1,5 +1,6 @@
 package com.molina;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Date;
 public class Avion {
 
     // Atributos
+    static ArrayList<Avion> aviones = new ArrayList<>();
+
     private String codigoVuelo;
     private String aerolinea;
     private int velocidadDeteccion;
@@ -26,6 +29,30 @@ public class Avion {
         this.velocidadDeteccion = velocidadDeteccion;
         FechaHoraDeteccion = fechaHoraDeteccion;
         this.distanciaTorre = distanciaTorre;
+    }
+
+    //Metodos
+
+    public static void detectarAvion(String codigoVuelo, String aerolinea, int velocidadDeteccion, Date fechaHoraDeteccion, double distanciaTorre) {
+        Avion avion = new Avion(codigoVuelo, aerolinea, velocidadDeteccion, fechaHoraDeteccion, distanciaTorre);
+
+        aviones.add(avion);
+    }
+
+    public static void mostarAviones() {
+        for (Avion avion: aviones) {
+            System.out.println(avion);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Avion: " +
+                "CodigoVuelo = " + codigoVuelo + '\'' +
+                ", aerolinea = " + aerolinea + '\'' +
+                ", velocidadDeteccion = " + velocidadDeteccion +
+                ", FechaHoraDeteccion = " + FechaHoraDeteccion +
+                ", distanciaTorre = " + distanciaTorre;
     }
 
     // Accesores
@@ -68,5 +95,9 @@ public class Avion {
 
     public void setDistanciaTorre(double distanciaTorre) {
         this.distanciaTorre = distanciaTorre;
+    }
+
+    public static ArrayList<Avion> getAviones() {
+        return aviones;
     }
 }
