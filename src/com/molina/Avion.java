@@ -57,13 +57,15 @@ public class Avion {
 
         Date fechaHoraActual = new Date();
 
-        long milisegundos = 1000*60*60*24;
-
-        long res;
+        double res;
+        double velocidadKmH;
 
         for (Avion avion: aviones){
-            res = (fechaHoraActual.getTime() - avion.getFechaHoraDeteccion().getTime())/milisegundos;
-            avion.setDistanciaTorre(avion.getDistanciaTorre()-avion.getVelocidadDeteccion()*res);
+            res = (fechaHoraActual.getTime() - avion.getFechaHoraDeteccion().getTime());
+            res = res/(1000*60*60*24);
+            velocidadKmH = avion.getVelocidadDeteccion();
+
+            avion.setDistanciaTorre(avion.getDistanciaTorre()-velocidadKmH*res);
         }
     }
 
@@ -95,11 +97,11 @@ public class Avion {
     @Override
     public String toString() {
         return "Avion: " +
-                "CodigoVuelo = " + codigoVuelo + '\'' +
-                ", aerolinea = " + aerolinea + '\'' +
-                ", velocidadDeteccion = " + velocidadDeteccion +
+                "CodigoVuelo = " + codigoVuelo +
+                ", aerolinea = " + aerolinea +
+                ", velocidadDeteccion = " + velocidadDeteccion + "km/h" +
                 ", FechaHoraDeteccion = " + FechaHoraDeteccion +
-                ", distanciaTorre = " + distanciaTorre;
+                ", distanciaTorre = " + distanciaTorre + "km";
     }
 
     // Accesores
