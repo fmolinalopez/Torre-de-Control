@@ -55,26 +55,38 @@ public class Avion {
     }
 
     public static void actualizarVelocidadDistancia(){
+        final int MILISEGUNDOS_EN_MINUTO = 1000;
+        final double METROS_EN_KM = 1000;
+        final double SEGUNDOS_EN_HORA = 3600;
 
-        Date fechaHoraActual = new Date();
+        Date fechaHoraActual;
 
-        double res;
-        double velocidadKmH;
+        long periodoDeTiempo;
+        double velocidadMetrosSegundos;
+        double kmRecorridos;
+
 
         for (Avion avion: aviones){
-            res = (fechaHoraActual.getTime() - avion.getFechaHoraDeteccion().getTime());
-            res = res/(1000*60*60*24);
-            velocidadKmH = avion.getVelocidadDeteccion();
 
-            avion.setDistanciaTorre(avion.getDistanciaTorre()-velocidadKmH*res);
+            fechaHoraActual  = new Date();
+
+            periodoDeTiempo = (fechaHoraActual.getTime() - avion.getFechaHoraDeteccion().getTime()) / MILISEGUNDOS_EN_MINUTO;
+
+            avion.setFechaHoraDeteccion(fechaHoraActual);
+
+            velocidadMetrosSegundos = avion.getVelocidadDeteccion() * METROS_EN_KM / SEGUNDOS_EN_HORA;
+
+            kmRecorridos = (velocidadMetrosSegundos * periodoDeTiempo) / METROS_EN_KM;
+
+            avion.setDistanciaTorre(avion.getDistanciaTorre()-kmRecorridos);
+
         }
+            Collections.sort(aviones, comparadorPorDistancia);
     }
 
     public static void mostrarAviones() {
 
         actualizarVelocidadDistancia();
-
-        Collections.sort(aviones, comparadorPorDistancia);
 
         for (Avion avion: aviones) {
             System.out.println(avion);
@@ -112,7 +124,11 @@ public class Avion {
     }
 
     public void setCodigoVuelo(String codigoVuelo) {
-        this.codigoVuelo = codigoVuelo;
+        if (this.codigoVuelo.equals("")){
+            this.codigoVuelo = "Sin codigo";
+        } else {
+            this.codigoVuelo = codigoVuelo;
+        }
     }
 
     public String getAerolinea() {
@@ -120,7 +136,11 @@ public class Avion {
     }
 
     public void setAerolinea(String aerolinea) {
-        this.aerolinea = aerolinea;
+        if (this.aerolinea.equals("")){
+            this.aerolinea = "Vuelo pirata";
+        } else {
+            this.aerolinea = aerolinea;
+        }
     }
 
     public double getVelocidadDeteccion() {
@@ -128,7 +148,11 @@ public class Avion {
     }
 
     public void setVelocidadDeteccion(double velocidadDeteccion) {
-        this.velocidadDeteccion = velocidadDeteccion;
+        if (this.velocidadDeteccion < 0){
+            this.velocidadDeteccion = 0;
+        } else {
+            this.velocidadDeteccion = velocidadDeteccion;
+        }
     }
 
     public Date getFechaHoraDeteccion() {
@@ -144,7 +168,11 @@ public class Avion {
     }
 
     public void setDistanciaTorre(double distanciaTorre) {
-        this.distanciaTorre = distanciaTorre;
+        if (this.distanciaTorre < 0){
+            this.distanciaTorre = 0;
+        } else {
+            this.distanciaTorre = distanciaTorre;
+        }
     }
 
     public static ArrayList<Avion> getAviones() {
