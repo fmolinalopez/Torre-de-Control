@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by Fran on 03/05/2017.
  */
-public class Avion {
+public class Avion implements Comparable {
 
     // Atributos
     static ArrayList<Avion> aviones = new ArrayList<>();
@@ -32,16 +32,29 @@ public class Avion {
 
     // Metodos
 
-    public static Comparator<Avion> comparadorPorDistancia = new Comparator<Avion>() {
-        @Override
-        public int compare(Avion avion1, Avion avion2) {
-            double res;
 
-            res = avion1.getDistanciaTorre() - avion2.getDistanciaTorre();
+    @Override
+    public int compareTo(Object obj) {
 
-            return (int)res;
-        }
-    };
+        Avion avion = (Avion) obj;
+
+        double res;
+
+        res = this.getDistanciaTorre() - avion.getDistanciaTorre();
+
+        return (int)res;
+    }
+
+//    public static Comparator<Avion> comparadorPorDistancia = new Comparator<Avion>() {
+//        @Override
+//        public int compare(Avion avion1, Avion avion2) {
+//            double res;
+//
+//            res = avion1.getDistanciaTorre() - avion2.getDistanciaTorre();
+//
+//            return (int)res;
+//        }
+//    };
 
     public static void detectarAvion(String codigoVuelo, String aerolinea, double velocidadDeteccion, double distanciaTorre) {
         Date fechaHoraActual = new Date();
@@ -72,16 +85,15 @@ public class Avion {
 
             periodoDeTiempo = (fechaHoraActual.getTime() - avion.getFechaHoraDeteccion().getTime()) / MILISEGUNDOS_EN_MINUTO;
 
-            avion.setFechaHoraDeteccion(fechaHoraActual);
-
             velocidadMetrosSegundos = avion.getVelocidadDeteccion() * METROS_EN_KM / SEGUNDOS_EN_HORA;
 
             kmRecorridos = (velocidadMetrosSegundos * periodoDeTiempo) / METROS_EN_KM;
 
             avion.setDistanciaTorre(avion.getDistanciaTorre()-kmRecorridos);
 
+            avion.setFechaHoraDeteccion(fechaHoraActual);
         }
-            Collections.sort(aviones, comparadorPorDistancia);
+            Collections.sort(aviones);
     }
 
     public static void mostrarAviones() {
