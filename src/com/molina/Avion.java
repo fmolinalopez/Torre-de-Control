@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by Fran on 03/05/2017.
  */
-public class Avion implements Comparable {
+public class Avion implements Comparable<Avion>, Comparator<Avion> {
 
     // Atributos
     static ArrayList<Avion> aviones = new ArrayList<>();
@@ -34,9 +34,7 @@ public class Avion implements Comparable {
 
 
     @Override
-    public int compareTo(Object obj) {
-
-        Avion avion = (Avion) obj;
+    public int compareTo(Avion avion) {
 
         double res;
 
@@ -45,14 +43,24 @@ public class Avion implements Comparable {
         return (int)res;
     }
 
-//    public static Comparator<Avion> comparadorPorDistancia = new Comparator<Avion>() {
+    @Override
+    public int compare(Avion av1, Avion av2) {
+        int res;
+
+        res = av1.getAerolinea().compareTo(av2.getAerolinea());
+
+        if (res != 0){
+            return res;
+        }
+
+        return (int)(av1.getDistanciaTorre() - av2.getDistanciaTorre());
+    }
+
+//      public static Comparator<Avion> comparadorPorVelocidad = new Comparator<Avion>() {
 //        @Override
 //        public int compare(Avion avion1, Avion avion2) {
-//            double res;
 //
-//            res = avion1.getDistanciaTorre() - avion2.getDistanciaTorre();
-//
-//            return (int)res;
+//            return (int)(avion1.getVelocidadDeteccion() - avion2.getVelocidadDeteccion());
 //        }
 //    };
 
