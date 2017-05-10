@@ -12,7 +12,7 @@ public class Avion {
 
     private String codigoVuelo;
     private String aerolinea;
-    private int velocidadDeteccion;
+    private double velocidadDeteccion;
     private Date FechaHoraDeteccion;
     private double distanciaTorre;
 
@@ -22,15 +22,16 @@ public class Avion {
     public Avion() {
     }
 
-    public Avion(String codigoVuelo, String aerolinea, int velocidadDeteccion, Date fechaHoraDeteccion, double distanciaTorre) {
+    public Avion(String codigoVuelo, String aerolinea, double velocidadDeteccion, Date fechaHoraDeteccion, double distanciaTorre) {
         this.codigoVuelo = codigoVuelo;
         this.aerolinea = aerolinea;
         this.velocidadDeteccion = velocidadDeteccion;
-        FechaHoraDeteccion = fechaHoraDeteccion;
+        this.FechaHoraDeteccion = fechaHoraDeteccion;
         this.distanciaTorre = distanciaTorre;
     }
 
-    //Metodos
+    // Metodos
+
     public static Comparator<Avion> comparadorPorDistancia = new Comparator<Avion>() {
         @Override
         public int compare(Avion avion1, Avion avion2) {
@@ -42,7 +43,7 @@ public class Avion {
         }
     };
 
-    public static void detectarAvion(String codigoVuelo, String aerolinea, int velocidadDeteccion, double distanciaTorre) {
+    public static void detectarAvion(String codigoVuelo, String aerolinea, double velocidadDeteccion, double distanciaTorre) {
         Date fechaHoraActual = new Date();
 
         Avion avion = new Avion(codigoVuelo, aerolinea, velocidadDeteccion, fechaHoraActual, distanciaTorre);
@@ -122,11 +123,11 @@ public class Avion {
         this.aerolinea = aerolinea;
     }
 
-    public int getVelocidadDeteccion() {
+    public double getVelocidadDeteccion() {
         return velocidadDeteccion;
     }
 
-    public void setVelocidadDeteccion(int velocidadDeteccion) {
+    public void setVelocidadDeteccion(double velocidadDeteccion) {
         this.velocidadDeteccion = velocidadDeteccion;
     }
 
