@@ -1,4 +1,4 @@
-package com.molina;
+package com.molina.model;
 
 import java.util.*;
 
@@ -20,6 +20,13 @@ public class Avion implements Comparable<Avion>, Comparator<Avion> {
     // Constructores
 
     public Avion() {
+    }
+
+    public Avion(String codigoVuelo, String aerolinea, double velocidadDeteccion, double distanciaTorre) {
+        this.codigoVuelo = codigoVuelo;
+        this.aerolinea = aerolinea;
+        this.velocidadDeteccion = velocidadDeteccion;
+        this.distanciaTorre = distanciaTorre;
     }
 
     public Avion(String codigoVuelo, String aerolinea, double velocidadDeteccion, Date fechaHoraDeteccion, double distanciaTorre) {
@@ -70,12 +77,11 @@ public class Avion implements Comparable<Avion>, Comparator<Avion> {
         Avion avion = new Avion(codigoVuelo, aerolinea, velocidadDeteccion, fechaHoraActual, distanciaTorre);
 
         aviones.add(avion);
-
-        if (preguntarLista()) mostrarAviones();
-
     }
 
     public static void actualizarVelocidadDistancia(){
+        Iterator<Avion> itAviones = aviones.iterator();
+
         final int MILISEGUNDOS_EN_MINUTO = 1000;
         final double METROS_EN_KM = 1000;
         final double SEGUNDOS_EN_HORA = 3600;
@@ -86,8 +92,9 @@ public class Avion implements Comparable<Avion>, Comparator<Avion> {
         double velocidadMetrosSegundos;
         double kmRecorridos;
 
+        while ( itAviones.hasNext() ){
 
-        for (Avion avion: aviones){
+            Avion avion = itAviones.next();
 
             fechaHoraActual  = new Date();
 
@@ -100,17 +107,17 @@ public class Avion implements Comparable<Avion>, Comparator<Avion> {
             avion.setDistanciaTorre(avion.getDistanciaTorre()-kmRecorridos);
 
             avion.setFechaHoraDeteccion(fechaHoraActual);
+
+            if (avion.getDistanciaTorre() <= 0 ) {
+                System.out.println("Avion borrado.");
+                itAviones.remove();
+            }
         }
             Collections.sort(aviones);
     }
 
-    public static void mostrarAviones() {
-
-        actualizarVelocidadDistancia();
-
-        for (Avion avion: aviones) {
-            System.out.println(avion);
-        }
+    public void ordernar(){
+        Collections.sort(aviones,new Avion());
     }
 
     public static boolean preguntarLista(){
