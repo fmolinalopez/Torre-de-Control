@@ -79,6 +79,29 @@ public class Avion implements Comparable<Avion>, Comparator<Avion> {
         aviones.add(avion);
     }
 
+    public static void eliminarAvion(String codigoVueloBorrar){
+        Iterator<Avion> itAviones = aviones.iterator();
+
+        while ( itAviones.hasNext() ){
+            Avion avion = itAviones.next();
+
+            if (avion.getCodigoVuelo().equalsIgnoreCase(codigoVueloBorrar)){
+                itAviones.remove();
+            }
+        }
+    }
+
+    public static boolean codigoExiste(String codigoVueloBorrar){
+
+        for (Avion avion: aviones){
+            if (avion.getCodigoVuelo().equalsIgnoreCase(codigoVueloBorrar)){
+                return true;
+            }
+        }
+            System.out.println("No existe ningun avion con ese codigo.");
+            return false;
+    }
+
     public static void actualizarVelocidadDistancia(){
         Iterator<Avion> itAviones = aviones.iterator();
 
@@ -133,6 +156,11 @@ public class Avion implements Comparable<Avion>, Comparator<Avion> {
             return false;
         }
     }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        return super.equals(obj);
+//    }
 
     @Override
     public String toString() {

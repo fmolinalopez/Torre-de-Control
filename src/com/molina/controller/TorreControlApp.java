@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * Created by User01 on 11/05/2017.
+ * Created by Fran on 11/05/2017.
  */
 public class TorreControlApp {
 
@@ -20,13 +20,15 @@ public class TorreControlApp {
                     añadirAvion();
                     break;
                 case 2:
+                    borrarAvion();
+                case 3:
                     mostrarAviones();
             }
         }
     }
 
     public void loadTestFlights(){
-        Avion.detectarAvion("RY002", "RYANAIR", 900, 5);
+        Avion.detectarAvion("RY002", "RYANAIR", 900, 560);
         Avion.detectarAvion("RY102", "RYANAIR", 650, 475);
         Avion.detectarAvion("IB125", "IBERIA", 800, 500);
         Avion.detectarAvion("IB127", "IBERIA", 500, 450);
@@ -53,6 +55,20 @@ public class TorreControlApp {
         Avion.getAviones().add( new Avion( codigoVuelo,aerolinea,velocidadDeteccion,distanciaTorre ) );
     }
 
+    private void borrarAvion(){
+        Scanner input = new Scanner(System.in);
+        String codigoVueloBorrar;
+
+        mostrarAviones();
+
+        do{
+            System.out.println("Introduzca el codigo del vuelo a borrar:");
+            codigoVueloBorrar = input.nextLine().trim().replaceAll("\\s+"," ");
+        }while ( codigoVueloBorrar.equals("") || !Avion.codigoExiste(codigoVueloBorrar) );
+
+        Avion.eliminarAvion(codigoVueloBorrar);
+    }
+
     private void mostrarAviones(){
 
         Avion.actualizarVelocidadDistancia();
@@ -68,7 +84,8 @@ public class TorreControlApp {
 
         System.out.println("****************************");
         System.out.println("* 1 - Añadir Avion         *");
-        System.out.println("* 2 - Mostrar aviones      *");
+        System.out.println("* 2 - Borrar Avion         *");
+        System.out.println("* 3 - Mostrar aviones      *");
         System.out.println("* 0 - Salir                *");
         System.out.println("****************************");
         System.out.println("Opción: ");
